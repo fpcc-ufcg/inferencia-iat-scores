@@ -5,7 +5,7 @@ output:
     df_print: paged
 theme: sandstone
 params: 
-    arquivo_dados: "data/sdsu .csv"
+    arquivo_dados: "data/brasilia .csv"
 ---
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -20,14 +20,21 @@ knitr::opts_chunk$set(tidy = FALSE,
                       fig.height = 5)
 
 ```
+# O problema
+
+Como está descrito no [repositório](https://github.com/fpcc-ufcg/inferencia-iat-scores), usaremos os dados de um experimento que foi replicado em vários laboratórios pelo mundo e iremos analisar os resultados de cada um deles. O objetivo aqui é entender melhor as diferenças sexuais e como isso afeta a participação dos gêneros em diferentes campos científicos. Os dados obtidos são relativos ao Implicit Association Tests (IATs) que foram realizados pelos participantes, procurando entender a percepção das atitudes de cada pessoa com relação à matemática e artes. Uma explicação mais completa pode ser vista na referência anterior.
 
 # Sobre IAT
 
-IAT: 0.15, 0.35, and 0.65 are considered small, medium, and large level of bias for individual scores.
+O IAT é uma medida em que valores positivos representam um maior viés para artes (ou mais contrário à matemática) e pode ser mensurada por três níveis:
 
-Positive means bias towards arts / against Math.
+- Viés baixo: IAT próximo de 0,15
+- Viés médio: IAT próximo de 0,35
+- Viés alto: IAT próximo de 0,65
 
 # Análise de uma replicação
+
+A seguir, temos uma visão geral dos dados.
 
 ```{r}
 iat = read_csv(here::here(params$arquivo_dados), col_types = "cccdc")
@@ -35,6 +42,8 @@ iat = iat %>%
     mutate(sex = factor(sex, levels = c("m", "f"), ordered = TRUE))
 glimpse(iat)
 ```
+
+Observando o histograma dos IATs, por sexo:
 
 ```{r}
 iat %>%
@@ -45,6 +54,7 @@ iat %>%
     theme(legend.position = "None")
 ```
 
+Também podemos observar os dados com base na distribuição dos pontos, novamente por sexo:
 
 ```{r}
 iat %>% 
@@ -52,13 +62,13 @@ iat %>%
     geom_quasirandom(width = .1)
 ```
 
-
+E adicionando a estatística da média de cada grupo, representada pelo ponto vermelho:
 
 ```{r}
 iat %>% 
     ggplot(aes(x = sex, y = d_art)) + 
     geom_quasirandom(width = .1) + 
-    stat_summary(geom = "point", fun.y = "mean", color = "red", size = 5)
+    stat_summary(geom = "point", fun = "mean", color = "red", size = 5)
 ```
 
 ##### Qual a diferença na amostra
@@ -66,7 +76,9 @@ iat %>%
 ```{r}
 iat %>% 
     group_by(sex) %>% 
-    summarise(media = mean(d_art))
+    summarise(media = mean(d_art),
+              N = n(), 
+              desvio = sd(d_art))
 ```
 
 
@@ -125,7 +137,7 @@ ci %>%
 p1 = iat %>% 
     ggplot(aes(x = sex, y = d_art)) +
     geom_quasirandom(width = .1) + 
-    stat_summary(geom = "point", fun.y = "mean", color = "red", size = 5)
+    stat_summary(geom = "point", fun = "mean", color = "red", size = 5)
 
 p2 = ci %>%
     ggplot(aes(
@@ -146,12 +158,6 @@ grid.arrange(p1, p2, ncol = 2)
 
 ### Conclusão
 
-Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com a matemárica **positiva/negativa** e **fraca/média/forte** (média XXX, desv. padrão YYY, N = ZZZ). Homens tiveram uma associação **positiva/negativa** com a matemática, portanto **maior/menor** que a das mulheres (média , desv. padrão, N = ). Houve portanto uma **grande/considerável/pequena** diferença entre homens e mulheres (diferença das médias XXXX, 95% CI [CCC, DDD]). A partir desta amostra, estimamos que...
-
---- 
-*Exemplos de possíveis conclusões para completar*
-
-  * mulheres têm uma associação negativa consideravelmente mais forte, com uma diferença que provavelmente está entre 0.6 e 1.0 ponto na escala IAT, o suficiente para diferenciar uma associação neutra de uma muito forte contra a matemática.
-  * mulheres têm uma associação negativa mais forte, porém não é claro se essa diferença é grande, moderada ou pequena. É necessário coletar mais dados para determinar se a diferença é relevante ou negligenciável. 
-  * mulheres podem ter um associação negativa forte, pode não haver diferença entre sexos ou homens podem ter atitudes negativas um pouco mais fortes ou moderadamente mais fortes. 
-  * pode não haver uma diferença entre sexos, ou se ela existir, ela provavelmente é pequena em qualquer das direções. 
+Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com força quase alta e contrária (viés negativo) à matemática (média = 0.570, desv. padrão =  0.422, N = 65). Homens tiveram uma associação também contrária (viés negativo) em relação à matemática e com força média, sendo uma associação maior à matemática do que a associação das mulheres (média = 0.399, desv. padrão = 0.516, N = 48). Houve portanto uma pequena diferença entre homens e mulheres (diferença das médias 0.170, 95% CI [-0.334, 0.016]).  
+A partir desta amostra, estimamos que pode não haver uma diferença entre os sexos, visto que o valor 0 está incluso no intervalo de confiança. Se ela existir, ela provavelmente teria força baixa para o lado negativo e muito pequena para o lado positivo.  
+Além disso, vimos que podemos calcular uma estatística (diferença entre IATs de diferentes sexos) de duas formas distintas. Ao final, vemos que utilizar bootstraping para o cálculo de intervalos de confiança fornecem resultados muito próximos ao calcular a mesma estatística de forma manual, utilizando amostras. Entretanto, por realizar diversas reamostragens, esse método fornece uma estatística que pode ser mais robusta e mais próxima do que pode ser observado na população.
