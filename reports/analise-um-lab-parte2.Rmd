@@ -3,6 +3,7 @@ title: "Análise de uma replicação"
 output:
     html_document:
     df_print: paged
+    author: Mariana Mendes 
 theme: sandstone
 params: 
     arquivo_dados: "data/sdsu .csv"
@@ -13,6 +14,7 @@ library(tidyverse)
 library(broom)
 library(ggbeeswarm)
 library(gridExtra)
+library(stringr)
 theme_set(theme_bw())
 
 knitr::opts_chunk$set(tidy = FALSE,
@@ -66,7 +68,7 @@ iat %>%
 ```{r}
 iat %>% 
     group_by(sex) %>% 
-    summarise(media = mean(d_art))
+    summarise(media = mean(d_art), desvio = sd(d_art),  n = n())
 ```
 
 
@@ -105,6 +107,7 @@ ci = tidy(booted,
           conf.int = TRUE)
 
 glimpse(ci)
+
 ```
 
 ```{r}
@@ -125,7 +128,7 @@ ci %>%
 p1 = iat %>% 
     ggplot(aes(x = sex, y = d_art)) +
     geom_quasirandom(width = .1) + 
-    stat_summary(geom = "point", fun.y = "mean", color = "red", size = 5)
+    stat_summary(geom = "point", fun = "mean", color = "red", size = 5)
 
 p2 = ci %>%
     ggplot(aes(
@@ -146,7 +149,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ### Conclusão
 
-Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com a matemárica **positiva/negativa** e **fraca/média/forte** (média XXX, desv. padrão YYY, N = ZZZ). Homens tiveram uma associação **positiva/negativa** com a matemática, portanto **maior/menor** que a das mulheres (média , desv. padrão, N = ). Houve portanto uma **grande/considerável/pequena** diferença entre homens e mulheres (diferença das médias XXXX, 95% CI [CCC, DDD]). A partir desta amostra, estimamos que...
+Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com a matemática **negativa** e **média** (média 0.466, desv. padrão 0.5475, N = 117). Homens tiveram uma associação **positiva** com a matemática, portanto **maior** que a das mulheres (média 0.223, desv. padrão 0.4850899, N = 38 ). Houve portanto uma **considerável** diferença entre homens e mulheres (diferença das médias -0.2430539, 95% IC [-0.41, -0.06] ). A partir desta amostra, estimamos que mulheres tem uma associação negativa maior que a dos homens, a diferença é o suficiente para distinguir uma associação neutra de uma razoável contra a matemática.
 
 --- 
 *Exemplos de possíveis conclusões para completar*
