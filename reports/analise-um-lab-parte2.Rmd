@@ -1,11 +1,12 @@
 ---
 title: "Análise de uma replicação"
+author: "Elaine Cristina Juvino de Araújo"
 output:
     html_document:
     df_print: paged
 theme: sandstone
 params: 
-    arquivo_dados: "data/sdsu .csv"
+    arquivo_dados: "data/uva .csv"
 ---
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -66,7 +67,8 @@ iat %>%
 ```{r}
 iat %>% 
     group_by(sex) %>% 
-    summarise(media = mean(d_art))
+    #summarise(media = mean(d_art))
+    summarise(media = mean(d_art),desvio = sd(d_art))
 ```
 
 
@@ -142,11 +144,21 @@ p2 = ci %>%
 
 grid.arrange(p1, p2, ncol = 2)
 
+
+
+
+iat %>% subset(sex=="f")%>% summary()
+iat %>% subset(sex=="m")%>% summary()
+
+t.test(ci)
+
+
 ```
 
 ### Conclusão
 
-Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com a matemárica **positiva/negativa** e **fraca/média/forte** (média XXX, desv. padrão YYY, N = ZZZ). Homens tiveram uma associação **positiva/negativa** com a matemática, portanto **maior/menor** que a das mulheres (média , desv. padrão, N = ). Houve portanto uma **grande/considerável/pequena** diferença entre homens e mulheres (diferença das médias XXXX, 95% CI [CCC, DDD]). A partir desta amostra, estimamos que...
+Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com a matemática negativa e média (média = 0.623, desv. padrão 0.432, N = 57). Homens tiveram uma associação também negativa com a matemática, porém maior que a das mulheres (média 0.099 , desv. padrão = 0.522, N =24 ). Houve portanto uma grande diferença entre homens e mulheres (diferença das médias = -0.524, 95% CI [-0.7690958, -0.2884737]). A partir desta amostra, estimamos que tanto homens quanto mulheres possuem associação negativa para a matemática, o que implicaria que o sexo não significa uma tendência para a matemática.Entretanto, as mulheres têm uma associação negativa mais forte, porém é necessário coletar mais dados para determinar se a diferença é relevante ou negligenciável, considerando que a quantidade de mulheres é muito superior a quantidade de homens nesse conjunto de dados.
+
 
 --- 
 *Exemplos de possíveis conclusões para completar*
