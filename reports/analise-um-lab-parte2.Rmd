@@ -21,11 +21,11 @@ knitr::opts_chunk$set(tidy = FALSE,
 
 ```
 
-# Sobre IAT
+# Sobre Implicit Association Tests (IAT)
 
 IAT: 0.15, 0.35, and 0.65 are considered small, medium, and large level of bias for individual scores.
 
-Positive means bias towards arts / against Math.
+Positive means bias towards arts / against Math. 
 
 # Análise de uma replicação
 
@@ -155,3 +155,10 @@ Em média, as mulheres que participaram do experimento tiveram uma associação 
   * mulheres têm uma associação negativa mais forte, porém não é claro se essa diferença é grande, moderada ou pequena. É necessário coletar mais dados para determinar se a diferença é relevante ou negligenciável. 
   * mulheres podem ter um associação negativa forte, pode não haver diferença entre sexos ou homens podem ter atitudes negativas um pouco mais fortes ou moderadamente mais fortes. 
   * pode não haver uma diferença entre sexos, ou se ela existir, ela provavelmente é pequena em qualquer das direções. 
+
+### Observação
+
+Realize a análise sobre o IAT a partir da estimativa das estetísticas via: 
+
+1. bootstraps usando uma bibliotece (exemplo acima)
+2. bootstraps implementados por você
