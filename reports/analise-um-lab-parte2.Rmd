@@ -158,7 +158,7 @@ Em média, as mulheres que participaram do experimento tiveram uma associação 
 
 ### Observação
 
-Realize a análise sobre o IAT usando: 
+Realize as análises sobre o IAT usando: 
 
 1. bootstraps a partir de uma bibliotece (exemplo acima)
 2. bootstraps implementados por você
