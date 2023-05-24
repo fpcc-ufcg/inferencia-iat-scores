@@ -146,6 +146,8 @@ grid.arrange(p1, p2, ncol = 2)
 
 ### Conclusão
 
+###### Preencha os resultados e conclusões abaixo
+
 Em média, as mulheres que participaram do experimento tiveram uma associação implícita (medida pelo IAT) com a matemárica **positiva/negativa** e **fraca/média/forte** (média XXX, desv. padrão YYY, N = ZZZ). Homens tiveram uma associação **positiva/negativa** com a matemática, portanto **maior/menor** que a das mulheres (média , desv. padrão, N = ). Houve portanto uma **grande/considerável/pequena** diferença entre homens e mulheres (diferença das médias XXXX, 95% CI [CCC, DDD]). A partir desta amostra, estimamos que...
 
 --- 
@@ -156,9 +158,9 @@ Em média, as mulheres que participaram do experimento tiveram uma associação 
   * mulheres podem ter um associação negativa forte, pode não haver diferença entre sexos ou homens podem ter atitudes negativas um pouco mais fortes ou moderadamente mais fortes. 
   * pode não haver uma diferença entre sexos, ou se ela existir, ela provavelmente é pequena em qualquer das direções. 
 
-### Observação
+###### Realize novas análises sobre IAT usando as abordagens a seguir
 
-Realize as análises sobre o IAT usando: 
+Realize a análise e compare as conclusões obtidas nos dois casos experimentados:
 
 1. bootstraps a partir de uma bibliotece (exemplo acima)
 2. bootstraps implementados por você (justifique o método de IC com bootstraps escolhido)
