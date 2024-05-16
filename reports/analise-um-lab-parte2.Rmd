@@ -21,13 +21,11 @@ knitr::opts_chunk$set(tidy = FALSE,
 
 ```
 
-# Sobre Implicit Association Tests (IAT)
+# Sobre Implicit Association Tests (IAT) -- Olhe o README do repositório. 
 
-IAT: 0.15, 0.35, and 0.65 are considered small, medium, and large level of bias for individual scores.
+IAT: 0.15, 0.35, and 0.65 are considered small, medium, and large levels of bias for individual scores. Positive means bias towards arts / against Math. 
 
-Positive means bias towards arts / against Math. 
-
-# Análise de uma replicação
+# Exemplo de análise de uma replicação
 
 ```{r}
 iat = read_csv(here::here(params$arquivo_dados), col_types = "cccdc")
@@ -45,14 +43,11 @@ iat %>%
     theme(legend.position = "None")
 ```
 
-
 ```{r}
 iat %>% 
     ggplot(aes(x = sex, y = d_art)) + 
     geom_quasirandom(width = .1)
 ```
-
-
 
 ```{r}
 iat %>% 
@@ -69,7 +64,6 @@ iat %>%
     summarise(media = mean(d_art))
 ```
 
-
 ```{r}
 agrupado = iat %>% 
         group_by(sex) %>% 
@@ -78,7 +72,6 @@ agrupado = iat %>%
     f = agrupado %>% filter(sex == "f") %>% pull(media)
 m - f
 ```
-
 
 #### Comparação via ICs
 
@@ -141,10 +134,9 @@ p2 = ci %>%
          y = "IAT homens - mulheres")
 
 grid.arrange(p1, p2, ncol = 2)
-
 ```
 
-### Conclusão
+### Conclusão 
 
 ###### Preencha os resultados e conclusões abaixo
 
